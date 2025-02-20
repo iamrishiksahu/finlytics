@@ -1,0 +1,29 @@
+# Node.js dependencies
+node_modules/
+.next/
+out/
+dist/
+
+# Environment variables
+.env*
+
+# Logs & debugging
+*.log
+
+# Editor & system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# ESLint & Prettier cache
+.next/cache/
+.eslintcache
+stylelint.cache
+
+# Other caches
+.pnpm-store/
+.vercel/
