@@ -21,15 +21,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Link from "next/link";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
-  setIsSignup: React.Dispatch<React.SetStateAction<boolean>>; // Example for string state
+
 }
 
 
 export function LoginForm({
   className,
-  setIsSignup,
   ...props
 }: LoginFormProps) {
   const handleLoginWithGoogleClick = () => {};
@@ -93,9 +93,9 @@ export function LoginForm({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <span onClick={() => setIsSignup(true)} className="underline underline-offset-4 cursor-pointer">
-                  Sign up
-                </span>
+                <Link href={"/auth/signup"} className="underline underline-offset-4 cursor-pointer">
+                  Log in
+                </Link>
               </div>
             </div>
           </form>

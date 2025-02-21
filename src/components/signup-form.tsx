@@ -10,15 +10,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 interface SignupFormProps extends React.ComponentPropsWithoutRef<"div"> {
-    setIsSignup: React.Dispatch<React.SetStateAction<boolean>>; // Example for string state
+
   }
   
 
 export function SingupForm({
   className,
-  setIsSignup,
   ...props
 }: SignupFormProps) {
   const handleSignupWithGoogleClick = () => {};
@@ -98,9 +98,9 @@ export function SingupForm({
               </div>
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <span onClick={() => setIsSignup(false)} className="underline underline-offset-4 cursor-pointer">
+                <Link href={"/auth/login"} className="underline underline-offset-4 cursor-pointer">
                   Log in
-                </span>
+                </Link>
               </div>
             </div>
           </form>
