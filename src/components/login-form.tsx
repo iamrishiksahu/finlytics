@@ -10,18 +10,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import Link from "next/link";
+import { axiosInstance } from "@/api/axiosConfig";
+import { useState } from "react";
+import { Finlandica } from "next/font/google";
+import LinearProgress from "./custom/LinearProgress";
+import CircularProgressSpinner from "./custom/CircularProgressSpinner";
+import TypingAnimation from "./custom/TypingAnimation";
+import { useRouter } from "next/navigation";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
 
@@ -32,7 +28,43 @@ export function LoginForm({
   className,
   ...props
 }: LoginFormProps) {
-  const handleLoginWithGoogleClick = () => {};
+
+  const router = useRouter();
+
+
+  const handleLoginWithGoogleClick = async () => {
+
+   
+
+
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFormSubmit = async (e: any) => {
+
+    e.preventDefault();
+    setIsLoading(true);
+    try{
+      const res = await axiosInstance.post("/auth/login", {
+        email: e.target.email.value,
+        password: e.target.password.value
+      }, {
+        withCredentials: true
+      })      
+      
+      if(res.status == 200 && res.data?.access_token){
+        document.cookie = `accessToken=${res.data?.access_token}; path=/; secure; samesite=strict; max-age=900`;        
+        router.push("/dashboard")
+      }
+      return console.log(res)
+      
+    }catch(err){
+      console.log(err)
+    }finally{
+      setIsLoading(false)
+    }    
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -40,10 +72,11 @@ export function LoginForm({
           <CardTitle className="text-xl">Welcome back</CardTitle>
           <CardDescription>
             Login with your Email or Google account
+            
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={ (e: any) => handleFormSubmit(e)}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button
@@ -87,8 +120,11 @@ export function LoginForm({
                   </div>
                   <Input id="password" type="password" required />
                 </div>
-                <Button type="submit" className="w-full">
-                  Login
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {
+                    isLoading? <TypingAnimation/> :"Login"
+                  }
+                  
                 </Button>
               </div>
               <div className="text-center text-sm">

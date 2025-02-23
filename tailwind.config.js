@@ -11,6 +11,15 @@ module.exports = {
   ],
   theme: {
   	extend: {
+		animation: {
+			progress: 'progress 1.5s infinite linear',
+		},
+		keyframes: {
+			progress: {
+				'0%': { transform: 'translateX(-100%)' },
+				'100%': { transform: 'translateX(100%)' },
+			},
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
